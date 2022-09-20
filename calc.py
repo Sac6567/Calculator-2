@@ -24,7 +24,16 @@ class Calculator:
         self.display_frame = self.create_display_frame()
 
         self.total_label, self.label = self.create_display_labels()
+
+        self.digits = {
+            7: (1, 1), 8: (1, 2), 9: (1, 3),
+            4: (2, 1), 5: (2, 2), 6: (2, 3),
+            1: (3, 1), 2: (3, 2), 3: (3, 3),
+            0: (4, 2), '.': (4, 1)
+        }
+
         self.buttons_frame = self.create_buttons_frame()
+        self.create_digit_buttons()
 
     def create_display_labels(self):
         total_label = tk.Label(self.display_frame, text=self.total_expression, anchor=tk.E, bg=LIGHT_GRAY,
@@ -41,6 +50,11 @@ class Calculator:
         frame.pack(expand=True, fill="both")
         return frame
 
+    def create_digit_buttons(self):
+        for digit,grid_value in self.digits.items():
+            button = tk.Button(self.buttons_frame, text=str(digit), bg=WHITE, fg=LABEL_COLOR, font=DIGITS_FONT_STYLE,
+                               borderwidth=0)
+            button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
     def create_buttons_frame(self):
         frame = tk.Frame(self.window)
         frame.pack(expand=True, fill="both")
