@@ -32,8 +32,21 @@ class Calculator:
             0: (4, 2), '.': (4, 1)
         }
 
+        self.operations = {"/": "\u00F7", "*": "\u00D7", "-": "-", "+": "+"}
+
         self.buttons_frame = self.create_buttons_frame()
+        self.buttons_frame.rowconfigure(0, weight=1)
+
+        for x in  range(1,5):
+            self.buttons_frame.rowconfigure(x, weight=1)
+            self.buttons_frame.columnconfigure(x, weight=1)
         self.create_digit_buttons()
+        self.create_operator_buttons()
+        self.create_specal_buttons()
+
+    def create_specal_buttons(self):
+        self.create_clear_button()
+        self.create_equals_button()
 
     def create_display_labels(self):
         total_label = tk.Label(self.display_frame, text=self.total_expression, anchor=tk.E, bg=LIGHT_GRAY,
@@ -55,6 +68,21 @@ class Calculator:
             button = tk.Button(self.buttons_frame, text=str(digit), bg=WHITE, fg=LABEL_COLOR, font=DIGITS_FONT_STYLE,
                                borderwidth=0)
             button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
+    def create_operator_buttons(self):
+        i = 0
+        for operator,symbol in self.operations.items():
+            button = tk.Button(self.buttons_frame, text=symbol, bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE,
+                               borderwidth=0)
+            button.grid(row=i, column=4, sticky=tk.NSEW)
+            i+=1
+    def create_clear_button(self):
+        button = tk.Button(self.buttons_frame, text="C", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE,
+                           borderwidth=0)
+        button.grid(row=0, column=1, columnspan=3, sticky=tk.NSEW)
+    def create_equals_button(self):
+        button = tk.Button(self.buttons_frame, text="=", bg=LIGHT_BLUE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE,
+                           borderwidth=0)
+        button.grid(row=4, column=3, columnspan=2, sticky=tk.NSEW)
     def create_buttons_frame(self):
         frame = tk.Frame(self.window)
         frame.pack(expand=True, fill="both")
